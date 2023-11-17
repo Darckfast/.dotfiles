@@ -1,7 +1,7 @@
 require('lualine').setup({
-	options = {
-		theme = 'auto'
-	}
+    options = {
+        theme = 'auto'
+    }
 })
 
-require('indent_blankline').setup({})
+require("ibl").setup()

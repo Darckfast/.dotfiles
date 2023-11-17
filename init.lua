@@ -1,3 +1,3 @@
 require("main")
 
-vim.api.nvim_exec('language en_US', true)
+pcall(function() vim.api.nvim_exec('language en_us', true) end)
