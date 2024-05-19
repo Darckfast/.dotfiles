@@ -1,31 +1,29 @@
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-zero')
 
 
 lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
-    -- lsp.buffer_autoformat()
 
     local opts = { buffer = bufnr }
-
-    -- vim.keymap.set({ 'n', 'x' }, 'gq', function()
-    -- vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    -- end, opts)
-
-    -- vim.keymap.set('n', '<C-g>', vim.lsp.buf.signature_help())
 end)
 
-
-lsp.ensure_installed({
-    -- Replace these with whatever servers you want to install
-    'tsserver',
-    'eslint',
-    'lua_ls',
-    'gopls'
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        'tsserver',
+        'eslint',
+        'lua_ls',
+        'gopls'
+    },
+    handlers = {
+        function(server_name)
+            require('lspconfig')[server_name].setup({})
+        end,
+    },
 })
 
-lsp.setup()
+-- lsp.setup()
 
--- Fix Undefined global 'vim'
 lsp.configure('lua-language-server', {
     settings = {
         Lua = {
@@ -49,7 +47,6 @@ lspconfig.gopls.setup({
     },
 })
 
--- You need to setup `cmp` after lsp-zero
 local cmp = require('cmp')
 local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
 
@@ -67,9 +64,6 @@ cmp.setup({
     },
 })
 
--- vim.diagnostic.config({
--- virtual_text = true
--- })
 
 lsp.format_on_save({
     format_opts = {
@@ -78,10 +72,7 @@ lsp.format_on_save({
     },
     servers = {
         ['lua_ls'] = { 'lua' },
-        ['tsserver'] = { 'typescript' },
-        -- if you have a working setup with null-ls
-        -- you can specify filetypes it can format.
-        -- ['null-ls'] = {'javascript', 'typescript'},
+        ['tsserver'] = { 'typescript', 'typescriptreact' },
     }
 })
 
@@ -90,11 +81,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     callback = function()
         local params = vim.lsp.util.make_range_params()
         params.context = { only = { "source.organizeImports" } }
-        -- buf_request_sync defaults to a 1000ms timeout. Depending on your
-        -- machine and codebase, you may want longer. Add an additional
-        -- argument after params if you find that you have to write the file
-        -- twice for changes to be saved.
-        -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
         local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
         for cid, res in pairs(result or {}) do
             for _, r in pairs(res.result or {}) do

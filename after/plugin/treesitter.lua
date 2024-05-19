@@ -15,6 +15,7 @@ require 'nvim-treesitter.configs'.setup {
     end,
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = { "javascript", "typescript", "lua", "vim", "vimdoc", "query" },
+    ignore_install = { "yaml" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -35,3 +36,4 @@ require 'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = false,
     },
 }
+
