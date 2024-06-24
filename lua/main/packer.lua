@@ -63,7 +63,7 @@ return require('packer').startup(function(use)
         end
     }
     use('sainnhe/sonokai')
-    -- use('tpope/vim-surround')
+    use('tpope/vim-surround')
 
     -- Must be at the end
     -- Automatically set up your configuration after cloning packer.nvim

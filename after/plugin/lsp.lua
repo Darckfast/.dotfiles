@@ -7,6 +7,8 @@ lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr }
 end)
 
+-- lsp.sve
+-- require('')
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
@@ -73,6 +75,7 @@ lsp.format_on_save({
     servers = {
         ['lua_ls'] = { 'lua' },
         ['tsserver'] = { 'typescript', 'typescriptreact' },
+        ['svelte'] = { 'svelte' }
     }
 })
 

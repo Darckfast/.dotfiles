@@ -20,6 +20,8 @@ vim.keymap.set("i", '[', '[]<Left>')
 vim.keymap.set("i", '{', '{}<Left>')
 vim.keymap.set("i", '{<CR>', '{<CR>}<Esc>O')
 
+-- vim.keymap.set("n", '<leader>u', ':buffer #<CR>')
+
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 vim.api.nvim_create_user_command('W', 'w', {})
