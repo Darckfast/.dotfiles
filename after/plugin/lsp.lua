@@ -12,7 +12,9 @@ end)
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'tsserver',
+        'ts_ls',
+        'svelte',
+        'tailwindcss',
         'eslint',
         'lua_ls',
         'gopls'
@@ -26,7 +28,7 @@ require('mason-lspconfig').setup({
 
 -- lsp.setup()
 
-lsp.configure('lua-language-server', {
+lsp.configure('lua_ls', {
     settings = {
         Lua = {
             diagnostics = {
