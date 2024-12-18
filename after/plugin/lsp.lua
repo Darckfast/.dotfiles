@@ -1,11 +1,11 @@
-local lsp = require('lsp-zero')
-
-
-lsp.on_attach(function(client, bufnr)
-    lsp.default_keymaps({ buffer = bufnr })
-
-    local opts = { buffer = bufnr }
-end)
+-- local lsp = require('lsp-zero')
+-- local lsp = require('lspconfig')
+--
+-- lsp.on_attach(function(client, bufnr)
+--     lsp.default_keymaps({ buffer = bufnr })
+--
+--     local opts = { buffer = bufnr }
+-- end)
 
 -- lsp.sve
 -- require('')
@@ -17,6 +17,11 @@ require('mason-lspconfig').setup({
         'tailwindcss',
         'eslint',
         'lua_ls',
+        'html',
+        'eslint',
+        'cssls',
+        'tailwindcss',
+        'svelte',
         'gopls'
     },
     handlers = {
@@ -39,6 +44,12 @@ lsp.configure('lua_ls', {
 })
 
 local lspconfig = require("lspconfig")
+lspconfig.sources = {
+    organizeImports = {
+        starThreshold = 9999,
+        staticStarThreshold = 9999,
+    }
+}
 lspconfig.gopls.setup({
     settings = {
         gopls = {
@@ -55,6 +66,15 @@ local cmp = require('cmp')
 local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
 
 cmp.setup({
+    sources = {
+        {name = 'nvim_lsp'},
+    },
+    snippet = {
+        expand = function(args)
+            -- You need Neovim v0.10 to use vim.snippet
+            vim.snippet.expand(args.body)
+        end,
+    },
     mapping = {
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ['<C-e>'] = cmp.mapping.abort(),
@@ -68,33 +88,25 @@ cmp.setup({
     },
 })
 
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
 
-lsp.format_on_save({
-    format_opts = {
-        async = true,
-        timeout_ms = 10000,
-    },
-    servers = {
-        ['lua_ls'] = { 'lua' },
-        ['tsserver'] = { 'typescript', 'typescriptreact' },
-        ['svelte'] = { 'svelte' }
-    }
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = { "*.tf", "*.go", "*.js", "*.ts", "*.svelte" },
-    callback = function()
-        local params = vim.lsp.util.make_range_params()
-        params.context = { only = { "source.organizeImports" } }
-        local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-        for cid, res in pairs(result or {}) do
-            for _, r in pairs(res.result or {}) do
-                if r.edit then
-                    local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-                    vim.lsp.util.apply_workspace_edit(r.edit, enc)
-                end
-            end
+        if client.supports_method('textDocument/rename') then
+            -- Create a keymap for vim.lsp.buf.rename()
         end
-        vim.lsp.buf.format({ async = true })
-    end
+        if client.supports_method('textDocument/implementation') then
+            -- Create a keymap for vim.lsp.buf.implementation
+        end
+        if client.supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = args.buf,
+                callback = function()
+                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                end,
+            })
+        end
+    end,
 })
+

@@ -16,7 +16,10 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
     }
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.8',
@@ -24,33 +27,25 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use('tpope/vim-fugitive')
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        requires = {
-            --- Uncomment the two plugins below if you want to manage the language servers from neovim
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            { 'neovim/nvim-lspconfig' },
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-        }
-    }
+    use({'hrsh7th/nvim-cmp'})
+    use({'hrsh7th/cmp-nvim-lsp'})
     use {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
         end
-    }
 
+    }
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
         run =
-        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+        'make'
     }
-    -- use('lukas-reineke/indent-blankline.nvim')
     use('nvim-lualine/lualine.nvim')
     use('ThePrimeagen/harpoon')
     use {
@@ -64,7 +59,6 @@ return require('packer').startup(function(use)
     }
     use('sainnhe/sonokai')
     use('tpope/vim-surround')
-
     -- Must be at the end
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
