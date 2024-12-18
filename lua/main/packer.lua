@@ -27,8 +27,8 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use('tpope/vim-fugitive')
-    use({'hrsh7th/nvim-cmp'})
-    use({'hrsh7th/cmp-nvim-lsp'})
+    use({ 'hrsh7th/nvim-cmp' })
+    use({ 'hrsh7th/cmp-nvim-lsp' })
     use {
         'numToStr/Comment.nvim',
         config = function()
@@ -59,6 +59,19 @@ return require('packer').startup(function(use)
     }
     use('sainnhe/sonokai')
     use('tpope/vim-surround')
+    use({
+        "stevearc/oil.nvim",
+        config = function()
+            require("oil").setup()
+        end,
+    })
+    use 'nvim-tree/nvim-web-devicons'
+    use({
+        'echasnovski/mini.nvim',
+        config = function()
+            require('mini.icons').setup()
+        end
+    })
     -- Must be at the end
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

@@ -1,14 +1,3 @@
--- local lsp = require('lsp-zero')
--- local lsp = require('lspconfig')
---
--- lsp.on_attach(function(client, bufnr)
---     lsp.default_keymaps({ buffer = bufnr })
---
---     local opts = { buffer = bufnr }
--- end)
-
--- lsp.sve
--- require('')
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
@@ -29,18 +18,6 @@ require('mason-lspconfig').setup({
             require('lspconfig')[server_name].setup({})
         end,
     },
-})
-
--- lsp.setup()
-
-lsp.configure('lua_ls', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
 })
 
 local lspconfig = require("lspconfig")
@@ -67,7 +44,7 @@ local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
 
 cmp.setup({
     sources = {
-        {name = 'nvim_lsp'},
+        { name = 'nvim_lsp' },
     },
     snippet = {
         expand = function(args)
@@ -109,4 +86,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
     end,
 })
-
