@@ -1,3 +1,31 @@
+local cmp = require('cmp')
+local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+    sources = {
+        { name = 'nvim_lsp' },
+    },
+    snippet = {
+        expand = function(args)
+            -- You need Neovim v0.10 to use vim.snippet
+            vim.snippet.expand(args.body)
+        end,
+    },
+    mapping = {
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
+        ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
+        ['<C-Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
+        ['<Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
+        ['<C-p>'] = cmp.mapping.complete(),
+    },
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
@@ -7,15 +35,15 @@ require('mason-lspconfig').setup({
         'eslint',
         'lua_ls',
         'html',
-        'eslint',
         'cssls',
-        'tailwindcss',
-        'svelte',
-        'gopls'
+        'gopls',
+        'jsonls'
     },
     handlers = {
         function(server_name)
-            require('lspconfig')[server_name].setup({})
+            require('lspconfig')[server_name].setup({
+                capabilities = capabilities
+            })
         end,
     },
 })
@@ -39,32 +67,6 @@ lspconfig.gopls.setup({
     },
 })
 
-local cmp = require('cmp')
-local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
-
-cmp.setup({
-    sources = {
-        { name = 'nvim_lsp' },
-    },
-    snippet = {
-        expand = function(args)
-            -- You need Neovim v0.10 to use vim.snippet
-            vim.snippet.expand(args.body)
-        end,
-    },
-    mapping = {
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
-        ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
-        ['<C-Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
-        ['<Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
-        ['<C-p>'] = cmp.mapping.complete()
-    },
-})
-
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -80,7 +82,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
             vim.api.nvim_create_autocmd("BufWritePre", {
                 buffer = args.buf,
                 callback = function()
-                    vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
+                    vim.lsp.buf.format({ bufnr = args.buf })
+                    -- vim.lsp.buf.format()
                 end,
             })
         end
