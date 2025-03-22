@@ -37,4 +37,4 @@ vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('Q', 'q', {})
 
 vim.api.nvim_create_user_command('GC', 'G commit -m ""<q-args>""<cr>', { nargs = 1 })
-vim.api.nvim_create_user_command('GP', 'G push<cr>', {})
+vim.api.nvim_create_user_command('GP', 'G push', {})
