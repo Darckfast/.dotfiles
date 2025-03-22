@@ -30,6 +30,12 @@ return require('packer').startup(function(use)
     use({ 'hrsh7th/nvim-cmp' })
     use({ 'hrsh7th/cmp-nvim-lsp' })
     use {
+        "smjonas/inc-rename.nvim",
+        config = function()
+            require("inc_rename").setup()
+        end,
+    }
+    use {
         'numToStr/Comment.nvim',
         config = function()
             require('Comment').setup()
@@ -62,7 +68,11 @@ return require('packer').startup(function(use)
     use({
         "stevearc/oil.nvim",
         config = function()
-            require("oil").setup()
+            require("oil").setup({
+                view_options = {
+                    show_hidden = true
+                }
+            })
         end,
     })
     use 'nvim-tree/nvim-web-devicons'

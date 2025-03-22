@@ -28,5 +28,12 @@ vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- vim.keymap.set('n', '<leader>l', "<cmd>lua require('jdtls').organize_imports()<cr>")
 vim.keymap.set("n", "<leader>gl", "<cmd>lua vim.diagnostic.open_float()<cr>")
+vim.keymap.set("n", "<leader>rn", function()
+	return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true })
 
 vim.api.nvim_create_user_command('W', 'w', {})
+vim.api.nvim_create_user_command('Wq', 'wq', {})
+vim.api.nvim_create_user_command('Q', 'q', {})
+
+vim.api.nvim_create_user_command('GC', 'G commit -m ""<q-args>""<cr>', { nargs = 1 })
