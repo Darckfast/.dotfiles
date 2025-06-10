@@ -1,31 +1,10 @@
 local lspconfig = require("lspconfig")
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.sources = {
     organizeImports = {
         starThreshold = 9999,
         staticStarThreshold = 9999,
     }
 }
-lspconfig.gopls.setup({
-    capabilities = capabilities,
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-        },
-    },
-})
-
-lspconfig.svelte.setup({
-    capabilities = capabilities,
-})
-lspconfig.ts_ls.setup({
-    capabilities = capabilities,
-})
--- lspconfig.ts_ls.setup({})
 
 local cmp = require('cmp')
 local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
