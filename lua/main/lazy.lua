@@ -23,16 +23,17 @@ vim.g.maplocalleader = " "
 
 require('lazy').setup({
     -- Packer can manage itself
-    {"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"},
+    { "nvim-treesitter/nvim-treesitter",          branch = 'master', lazy = false, build = ":TSUpdate" },
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.8',
         -- or                              , branch = '0.1.x',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'tpope/vim-fugitive',
-    -- { 'hrsh7th/nvim-cmp' },
-    -- { 'hrsh7th/cmp-nvim-lsp' },
+    { 'hrsh7th/nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp' },
     {
         "smjonas/inc-rename.nvim",
         config = function()

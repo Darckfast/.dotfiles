@@ -1,4 +1,5 @@
 local lspconfig = require("lspconfig")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 lspconfig.sources = {
     organizeImports = {
         starThreshold = 9999,
@@ -6,6 +7,7 @@ lspconfig.sources = {
     }
 }
 lspconfig.gopls.setup({
+    capabilities = capabilities,
     settings = {
         gopls = {
             analyses = {
@@ -14,6 +16,40 @@ lspconfig.gopls.setup({
             staticcheck = true,
             gofumpt = true,
         },
+    },
+})
+
+lspconfig.svelte.setup({
+    capabilities = capabilities,
+})
+lspconfig.ts_ls.setup({
+    capabilities = capabilities,
+})
+-- lspconfig.ts_ls.setup({})
+
+local cmp = require('cmp')
+local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
+
+cmp.setup({
+    sources = {
+        { name = 'nvim_lsp' },
+    },
+    snippet = {
+        expand = function(args)
+            -- You need Neovim v0.10 to use vim.snippet
+            vim.snippet.expand(args.body)
+        end,
+    },
+    mapping = {
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
+        ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
+        ['<C-Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
+        ['<Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
+        ['<C-p>'] = cmp.mapping.complete()
     },
 })
 
