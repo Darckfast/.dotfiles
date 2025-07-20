@@ -88,6 +88,7 @@ require('lazy').setup({
             })
         end,
     }),
+    'navarasu/onedark.nvim',
     'nvim-tree/nvim-web-devicons',
     ({
         'echasnovski/mini.nvim',
@@ -95,6 +96,16 @@ require('lazy').setup({
             require('mini.icons').setup()
         end
     }),
+    {
+        "ravibrock/spellwarn.nvim",
+        event = "VeryLazy",
+        config = true,
+    },
+    -- Lazy
+    {
+        "olimorris/onedarkpro.nvim",
+        priority = 1000, -- Ensure it loads first
+    },
     checker = { enabled = true }
 })
 -- Setup lazy.nvim

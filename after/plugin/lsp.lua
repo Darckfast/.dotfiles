@@ -1,11 +1,3 @@
-local lspconfig = require("lspconfig")
-lspconfig.sources = {
-    organizeImports = {
-        starThreshold = 9999,
-        staticStarThreshold = 9999,
-    }
-}
-
 local cmp = require('cmp')
 local cmp_select_opts = { behavior = cmp.SelectBehavior.Select }
 
@@ -48,7 +40,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 buffer = args.buf,
                 callback = function()
                     vim.lsp.buf.format({ bufnr = args.buf })
-                    -- vim.lsp.buf.format()
+                    vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+                    vim.lsp.buf.code_action { context = { only = { 'source.fixAll' } }, apply = true, bufnr = args.buf }
+                    vim.wait(100)
                 end,
             })
         end
