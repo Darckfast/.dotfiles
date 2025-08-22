@@ -22,6 +22,7 @@ vim.keymap.set("i", '{', '{}<Left>')
 vim.keymap.set("i", '{<CR>', '{<CR>}<Esc>O')
 
 -- vim.keymap.set("n", '<leader>u', ':buffer #<CR>')
+vim.api.nvim_set_keymap("n", "<leader>gf", "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 

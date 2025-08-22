@@ -88,6 +88,20 @@ require('lazy').setup({
             })
         end,
     }),
+
+    ({
+        'pwntester/octo.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            -- OR 'ibhagwan/fzf-lua',
+            -- OR 'folke/snacks.nvim',
+            'nvim-tree/nvim-web-devicons',
+        },
+        config = function()
+            require "octo".setup()
+        end
+    }),
     'navarasu/onedark.nvim',
     'nvim-tree/nvim-web-devicons',
     ({
@@ -96,6 +110,7 @@ require('lazy').setup({
             require('mini.icons').setup()
         end
     }),
+
     {
         "ravibrock/spellwarn.nvim",
         event = "VeryLazy",
