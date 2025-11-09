@@ -121,17 +121,10 @@ require('lazy').setup({
         "olimorris/onedarkpro.nvim",
         priority = 1000, -- Ensure it loads first
     },
-    checker = { enabled = true }
+    checker = { enabled = true },
+    {
+        "zootedb0t/citruszest.nvim",
+        lazy = false,
+        priority = 1000,
+    },
 })
--- Setup lazy.nvim
--- require("lazy").setup({
--- spec = {
--- import your plugins
--- { import = "plugins" },
--- },
--- Configure any other settings here. See the documentation for more details.
--- colorscheme that will be used when installing plugins.
--- install = { colorscheme = { "" } },
--- automatically check for plugin updates
--- checker = { enabled = true },
--- })

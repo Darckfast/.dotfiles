@@ -38,5 +38,8 @@ vim.api.nvim_create_user_command('Wq', 'wq', {})
 vim.api.nvim_create_user_command('Q', 'q', {})
 
 vim.api.nvim_create_user_command('GC', "G commit -m <q-args>", { nargs = 1 })
+vim.api.nvim_create_user_command('GS', "G switch <q-args>", { nargs = 1 })
+vim.api.nvim_create_user_command('GCB', "G checkout -b <q-args>", { nargs = 1 })
 vim.api.nvim_create_user_command('GP', 'G push', {})
+vim.api.nvim_create_user_command('GPR', 'G pull --rebase', {})
 vim.api.nvim_create_user_command('Gp', 'GP', {})
