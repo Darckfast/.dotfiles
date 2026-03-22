@@ -20,50 +20,7 @@ cmp.setup({
         ['<Up>'] = cmp.mapping.select_prev_item(cmp_select_opts),
         ['<C-Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
         ['<Down>'] = cmp.mapping.select_next_item(cmp_select_opts),
-        ['<C-p>'] = cmp.mapping.complete(),
-    },
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require('mason').setup({})
-require('mason-lspconfig').setup({
-    ensure_installed = {
-        'ts_ls',
-        'svelte',
-        'tailwindcss',
-        'eslint',
-        'lua_ls',
-        'html',
-        'cssls',
-        'gopls',
-        'jsonls'
-    },
-    handlers = {
-        function(server_name)
-            require('lspconfig')[server_name].setup({
-                capabilities = capabilities
-            })
-        end,
-    },
-})
-
-local lspconfig = require("lspconfig")
-lspconfig.sources = {
-    organizeImports = {
-        starThreshold = 9999,
-        staticStarThreshold = 9999,
-    }
-}
-lspconfig.gopls.setup({
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-        },
+        ['<C-p>'] = cmp.mapping.complete()
     },
 })
 
@@ -83,7 +40,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
                 buffer = args.buf,
                 callback = function()
                     vim.lsp.buf.format({ bufnr = args.buf })
-                    -- vim.lsp.buf.format()
+                    vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+                    vim.lsp.buf.code_action { context = { only = { 'source.fixAll' } }, apply = true, bufnr = args.buf }
+                    vim.wait(100)
                 end,
             })
         end

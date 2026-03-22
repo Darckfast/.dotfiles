@@ -4,7 +4,7 @@ vim.keymap.set('n', '<C-e>', api.toggle.linewise.current)
 vim.keymap.set('v', '<C-r>', api.toggle.blockwise.current)
 
 local esc = '<Esc>'
-
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 -- Toggle selection (linewise)
 -- vim.keymap.set('x', '<leader>c', function()
 -- vim.api.nvim_feedkeys(esc, 'nx', false)
