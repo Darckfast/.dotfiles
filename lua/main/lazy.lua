@@ -23,7 +23,11 @@ vim.g.maplocalleader = " "
 
 require('lazy').setup({
     -- Packer can manage itself
-    { "nvim-treesitter/nvim-treesitter",          branch = 'master', lazy = false, build = ":TSUpdate" },
+    { "nvim-treesitter/nvim-treesitter",          
+        branch = 'main', 
+        lazy = false, 
+        build = ":TSUpdate" 
+    },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',
@@ -54,6 +58,16 @@ require('lazy').setup({
     {
         "mason-org/mason-lspconfig.nvim",
         opts = {},
+        -- config = function()
+        --     require("mason-lspconfig").setup({
+        --         ensure_installed = { "lua_ls", "gopls", "tsserver" },
+        --         handlers = {
+        --             function(server_name)
+        --                 require("lspconfig")[server_name].setup({})
+        --             end,
+        --         },
+        --     })
+        -- end,
         dependencies = {
             { "mason-org/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
@@ -127,4 +141,13 @@ require('lazy').setup({
         lazy = false,
         priority = 1000,
     },
+    {
+        "sotte/presenting.nvim",
+        opts = {
+            -- fill in your options here
+            -- see :help Presenting.config
+        },
+        cmd = { "Presenting" },
+    }
 })
+
