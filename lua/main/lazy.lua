@@ -58,26 +58,11 @@ require('lazy').setup({
     {
         "mason-org/mason-lspconfig.nvim",
         opts = {},
-        -- config = function()
-        --     require("mason-lspconfig").setup({
-        --         ensure_installed = { "lua_ls", "gopls", "tsserver" },
-        --         handlers = {
-        --             function(server_name)
-        --                 require("lspconfig")[server_name].setup({})
-        --             end,
-        --         },
-        --     })
-        -- end,
         dependencies = {
             { "mason-org/mason.nvim", opts = {} },
             "neovim/nvim-lspconfig",
         },
     },
-    -- {
-    --     "williamboman/mason.nvim",
-    --     "williamboman/mason-lspconfig.nvim",
-    --     "neovim/nvim-lspconfig",
-    -- },
     'nvim-lualine/lualine.nvim',
     'ThePrimeagen/harpoon',
     {
@@ -89,7 +74,6 @@ require('lazy').setup({
             }
         end
     },
-    -- { "scottmckendry/cyberdream.nvim" },
     ('sainnhe/sonokai'),
     ('tpope/vim-surround'),
     ({
@@ -101,20 +85,6 @@ require('lazy').setup({
                 }
             })
         end,
-    }),
-
-    ({
-        'pwntester/octo.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope.nvim',
-            -- OR 'ibhagwan/fzf-lua',
-            -- OR 'folke/snacks.nvim',
-            'nvim-tree/nvim-web-devicons',
-        },
-        config = function()
-            require "octo".setup()
-        end
     }),
     'navarasu/onedark.nvim',
     'nvim-tree/nvim-web-devicons',
