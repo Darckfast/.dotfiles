@@ -23,10 +23,10 @@ vim.g.maplocalleader = " "
 
 require('lazy').setup({
     -- Packer can manage itself
-    { "nvim-treesitter/nvim-treesitter",          
-        branch = 'main', 
-        lazy = false, 
-        build = ":TSUpdate" 
+    {
+        "nvim-treesitter/nvim-treesitter",
+        lazy = false,
+        build = ":TSUpdate"
     },
     {
         'nvim-telescope/telescope.nvim',
@@ -87,6 +87,7 @@ require('lazy').setup({
         end,
     }),
     'navarasu/onedark.nvim',
+    { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
     'nvim-tree/nvim-web-devicons',
     ({
         'echasnovski/mini.nvim',
@@ -120,4 +121,3 @@ require('lazy').setup({
         cmd = { "Presenting" },
     }
 })
-
